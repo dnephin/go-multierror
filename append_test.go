@@ -50,18 +50,27 @@ func TestAppend_NilError(t *testing.T) {
 func TestAppend_NilErrorArg(t *testing.T) {
 	var err error
 	var nilErr *Error
-	result := Append(err, nilErr)
-	if len(result.Errors) != 0 {
-		t.Fatalf("wrong len: %d", len(result.Errors))
+	result := AppendError(err, nilErr)
+	if result != nil {
+		t.Fatalf("expected a nil result, got %v", result)
 	}
 }
 
 func TestAppend_NilErrorIfaceArg(t *testing.T) {
 	var err error
 	var nilErr error
-	result := Append(err, nilErr)
-	if len(result.Errors) != 0 {
-		t.Fatalf("wrong len: %d", len(result.Errors))
+	result := AppendError(err, nilErr)
+	if result != nil {
+		t.Fatalf("expected a nil result, got %v", result)
+	}
+}
+
+func TestAppend_NilErrorToNilMultiError(t *testing.T) {
+	var err *Error
+	var nilErr error
+	result := AppendError(err, nilErr)
+	if result != nil {
+		t.Fatalf("expected a nil result, got %v", result)
 	}
 }
 

@@ -39,3 +39,18 @@ func Append(err error, errs ...error) *Error {
 		return Append(&Error{}, newErrs...)
 	}
 }
+
+func AppendError(err error, errs ...error) error {
+	var result []error
+	for _, e := range errs {
+		if e != nil {
+			result = append(result, e)
+		}
+	}
+
+	if len(result) == 0 {
+		return err
+	}
+
+	return Append(err, result...)
+}
